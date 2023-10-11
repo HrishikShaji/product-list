@@ -14,4 +14,12 @@ model Category {
  id              String   @id @default(auto()) @map("_id") @db.ObjectId
  name            String
  parentId        String?
+ products Product[]
+}
+
+model Product {
+id        String  @id @default(auto()) @map("_id") @db.ObjectId
+name String
+category    Category    @relation(references: [id], fields: [categoryId], onDelete: Cascade)
+categoryId  String  @db.ObjectId
 }
