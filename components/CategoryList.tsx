@@ -1,6 +1,12 @@
+import { CategoryChild } from "@/types/types";
 import { Category } from "./Category";
+import React from "react";
 
-const CategoryList = ({ categories }) => {
+interface CategoryListProps {
+  categories: CategoryChild[];
+}
+
+const CategoryList: React.FC<CategoryListProps> = ({ categories }) => {
   return (
     <ul>
       {categories.map((category) => (
