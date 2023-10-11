@@ -1,31 +1,34 @@
+"use client";
+
 import { Category, Product } from "@/types/types";
-import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const origin = process.env.ORIGIN;
-
-const getCategories = async (slug: string) => {
-  const categories = await axios.get(
-    `${origin}/api/categories?parentId=${slug}`,
-  );
-  return categories.data;
-};
-
-const getProducts = async (slug: string) => {
-  const products = await axios.get(`${origin}/api/products?categoryId=${slug}`);
-  return products.data;
-};
-const Page = async ({ params }: { params: { slug: string } }) => {
+const Page = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-  const categories = await getCategories(slug);
-  const products = await getProducts(slug);
+
+  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetch(`/api/categories?parentId=${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      });
+    fetch(`/api/products?categoryId=${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      });
+  }, [slug]);
 
   return (
     <div className="p-10 flex flex-col gap-10">
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">SubCategories</h1>
         <div className="flex gap-2">
-          {categories.map((item: Category) => (
+          {data.map((item: Category) => (
             <Link key={item.id} href={`/category/${item.id}`}>
               {item.name}
             </Link>
