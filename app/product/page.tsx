@@ -1,6 +1,6 @@
 "use client";
 
-import { Category } from "@/components/Category";
+import { CategoryChild } from "@/types/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -13,12 +13,14 @@ const Page = () => {
     fetch("/api/category")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setData(data);
       });
   }, []);
 
-  const createCategoryList = (categories, options = []) => {
+  const createCategoryList = (
+    categories: CategoryChild[],
+    options: { value: string; name: string }[] = [],
+  ) => {
     for (let category of categories) {
       options.push({ value: category.id, name: category.name });
       if (category.children.length > 0) {

@@ -1,6 +1,9 @@
 import { db } from "@/lib/db";
+import { Product } from "@/types/types";
 
-const getAllProductsInCategory = async (categoryId) => {
+const getAllProductsInCategory = async (
+  categoryId: string,
+): Promise<Product[]> => {
   const productsInCategory = await db.product.findMany({
     where: {
       categoryId: categoryId,
@@ -19,7 +22,9 @@ const getAllProductsInCategory = async (categoryId) => {
     ),
   );
 
-  return productsInCategory.concat(subcategoryProducts.flat());
+  const allProducts = productsInCategory.concat(subcategoryProducts.flat());
+
+  return allProducts;
 };
 
 export const GET = async (req: Request) => {
@@ -28,6 +33,7 @@ export const GET = async (req: Request) => {
   try {
     if (categoryId) {
       const allProducts = await getAllProductsInCategory(categoryId);
+      console.log(allProducts);
       return new Response(JSON.stringify(allProducts));
     } else {
       const products = await db.product.findMany({});

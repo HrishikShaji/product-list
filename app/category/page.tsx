@@ -1,6 +1,5 @@
 "use client";
 
-import { Category } from "@/components/Category";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CategoryList from "@/components/CategoryList";

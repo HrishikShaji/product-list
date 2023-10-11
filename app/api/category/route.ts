@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
+import { Category, CategoryChild } from "@/types/types";
 
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    console.log(body);
     const name = body.name;
     const parentId = body?.parentId ? body.parentId : null;
     const category = await db.category.create({
@@ -12,7 +12,6 @@ export const POST = async (req: Request) => {
         parentId,
       },
     });
-    console.log(category);
 
     return new Response(category.name);
   } catch (error) {
@@ -20,8 +19,11 @@ export const POST = async (req: Request) => {
   }
 };
 
-const createCategories = (categories, parentId = null) => {
-  const categoryList = [];
+const createCategories = (
+  categories: Category[],
+  parentId: string | null = null,
+) => {
+  const categoryList: CategoryChild[] = [];
   let category;
   if (parentId == null) {
     category = categories.filter((cat) => cat.parentId == null);
@@ -44,6 +46,7 @@ export const GET = async (req: Request) => {
     const categories = await db.category.findMany({});
 
     if (categories) {
+      console.log(categories);
       const categoryList = createCategories(categories);
       return new Response(JSON.stringify(categoryList));
     }
