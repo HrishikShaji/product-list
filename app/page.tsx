@@ -19,7 +19,7 @@ export default function Home() {
       });
   }, []);
   return (
-    <main className="p-10 flex flex-col gap-20">
+    <main className="p-20 flex flex-col gap-20">
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">Categories</h1>
         <div className="flex  gap-2">

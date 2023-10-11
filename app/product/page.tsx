@@ -40,7 +40,7 @@ const Page = () => {
     setName("");
   };
   return (
-    <div className="flex flex-col gap-10 p-10">
+    <div className="flex flex-col gap-10 p-20">
       <div className="flex flex-col gap-2">
         <input
           placeholder="Product name"

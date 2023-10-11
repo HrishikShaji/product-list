@@ -24,7 +24,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   }, [slug]);
 
   return (
-    <div className="p-10 flex flex-col gap-10">
+    <div className="p-20 flex flex-col gap-10">
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">SubCategories</h1>
         <div className="flex gap-2">
